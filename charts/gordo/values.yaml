@@ -1,0 +1,164 @@
+# Default values for gordo.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+images:
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+controller:
+  name: "controller"
+
+  replicaCount: 1
+
+  annotations: {}
+
+  image:
+    registry: ghcr.io
+    repository: equinor/gordo-controller
+    pullPolicy: ""
+    tag: ""
+
+  nameOverride: ""
+  fullnameOverride: ""
+
+  containerPort: 8888
+
+  rustLog: "debug,kube=debug"
+  defaultDeployEnvironment: {}
+
+  deployImage:
+    registry: ghcr.io
+    repository: equinor/gordo-base
+
+  env: {}
+
+  serviceAccount:
+    create: true
+    name: ""
+
+  rbac:
+    create: true
+
+  podAnnotations: {}
+
+  probe: {}
+
+  service:
+    type: ClusterIP
+    portName: "api"
+    port: 80
+
+  portName: "http-api"
+
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    hosts:
+      - minikube.local
+    tls:
+      enabled: false
+      secretName: ""
+
+  istio:
+    hosts: []
+    gateways:
+      # TODO make this field adjustable through gordo environment variable.
+      - istio-system/istio-gateway
+
+  resources: {}
+    # limits:
+    #   cpu: 500m
+    #   memory: 500Mi
+    # requests:
+    #   cpu: 10m
+    #   memory: 250Mi
+
+  volumes: []
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  topologySpreadConstraints: []
+
+crds:
+  install: true
+
+  keep: true
+  annotations: {}
+
+monitoring:
+  enabled: false
+
+  annotations: {}
+
+istio:
+  component: "istio"
+
+  enabled: false
+
+  annotations: {}
+
+  gateway:
+    create: false
+
+    selector: {}
+    hosts:
+    - minikube.local
+
+    http:
+      port: 80
+    https:
+      enabled: false
+      port: 443
+      tls:
+        mode: SIMPLE
+        secretName: ""
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# Apply extra labels to common labels.
+extraLabels: {}
+
+runtime:
+  name: "runtime"
+
+  create: true
+
+  modelBuilderConfig:
+    data: {}
+
+  serverPriority:
+    value: 100
+    globalDefault: false
+
+  pvc:
+    size: "200Gi"
+    storageClassName: "standard"
+
+argoRunner:
+  name: "argo-runner"
+
+  annotations: {}
+
+  rbac:
+    create: true
+
+  serviceAccount:
+    create: true
+    name: ""
+    annotations: {}

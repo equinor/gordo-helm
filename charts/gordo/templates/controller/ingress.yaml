@@ -1,0 +1,54 @@
+{{- if .Values.controller.ingress.enabled -}}
+{{- $fullName := include "gordo.controller.fullname" . -}}
+{{- $hosts := .Values.controller.ingress.hosts -}}
+{{- $port := .Values.controller.service.port -}}
+{{- $_ := set .Values.controller.ingress.annotations "ingress.kubernetes.io/rewrite-target" "/" }}
+{{- $_ := set .Values.controller.ingress.annotations "nginx.ingress.kubernetes.io/rewrite-target" "/" }}
+{{- if and .Values.controller.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.controller.ingress.annotations "kubernetes.io/ingress.class") }}
+    {{- $_ := set .Values.controller.ingress.annotations "kubernetes.io/ingress.class" .Values.controller.ingress.className}}
+  {{- end }}
+{{- end }}
+{{ include "gordo.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "gordo.labels"  (dict "context" . "component" .Values.controller.name) | nindent 4 }}
+  annotations:
+  {{- with .Values.controller.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if and .Values.controller.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.controller.ingress.className }}
+  {{- end }}
+  {{- if .Values.controller.ingress.tls.enabled }}
+  tls:
+    {{- with $hosts }}
+    hosts:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    secretName: {{.Values.controller.ingress.tls.secretName | quote }}
+  {{- end }}
+  rules:
+    {{- range $host := $hosts }}
+    - host: {{ $host | quote }}
+      http:
+        paths:
+          - path: /gordo-controller
+            {{- if (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: Prefix
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName | quote }}
+                port:
+                  number: {{ $port | int }}
+              {{- else }}
+              serviceName: {{ $fullName | quote }}
+              servicePort: {{ $port | int }}
+              {{- end }}
+          {{- end }}
+{{- end }}

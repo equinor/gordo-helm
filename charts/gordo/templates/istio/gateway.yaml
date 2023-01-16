@@ -1,0 +1,42 @@
+{{- if and .Values.istio.enabled .Values.istio.gateway.create -}}
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ include "gordo.controller.fullname" . }}
+  labels:
+    {{- include "gordo.labels"  (dict "context" . "component" .Values.istio.name) | nindent 4 }}
+  {{- with .Values.istio.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    {{- include "gordo.istio.gatewaySelector" . | nindent 4 }}
+  servers:
+  - port:
+      number: {{ .Values.istio.gateway.http.port | int }}
+      name: http
+      protocol: HTTP
+    {{- if .Values.istio.gateway.https.enabled }}
+    tls:
+      httpsRedirect: true
+    {{- end }}
+    {{- with .Values.istio.gateway.hosts }}
+    hosts:
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- if .Values.istio.gateway.https.enabled }}
+  - port:
+      name: https
+      number: {{ .Values.istio.gateway.https.port | int }}
+      protocol: HTTPS
+    {{- with .Values.istio.gateway.hosts }}
+    hosts:
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with .Values.istio.gateway.https.tls }}
+    tls:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,15 @@
+{{- if .Values.runtime.create -}}
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: server-priority
+  labels:
+    {{- include "gordo.labels"  (dict "context" . "component" .Values.runtime.name) | nindent 4 }}
+  {{- with .Values.runtime.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+value: {{ .Values.runtime.serverPriority.value | int }}
+globalDefault: {{ printf "%t" .Values.runtime.serverPriority.globalDefault }}
+description: Should be used for gordo server deployments.
+{{- end }}

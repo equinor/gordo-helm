@@ -1,0 +1,28 @@
+{{- if .Values.controller.istio.enabled -}}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "gordo.controller.fullname" . }}
+  labels:
+    {{- include "gordo.labels"  (dict "context" . "component" .Values.controller.name) | nindent 4 }}
+  {{- with .Values.controller.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  hosts:
+  {{- include "gordo.controller.virtualServiceHosts" . | nindent 2 }}
+  {{- with .Values.controller.istio.vs.gateways }}
+  gateways:
+  {{ toYaml . | nindent 2 }}
+  {{- end }}
+  http:
+  - match:
+    - uri:
+        prefix: /gordo-controller/
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: {{ include "gordo.controller.fullname" . }}
+{{- end -}}

@@ -1,0 +1,16 @@
+{{- if .Values.runtime.create -}}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: gordo-components-config-map
+  labels:
+    {{- include "gordo.labels"  (dict "context" . "component" .Values.runtime.name) | nindent 4 }}
+  {{- with .Values.runtime.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  {{- with .Values.runtime.modelBuilderConfig.data }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}

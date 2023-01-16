@@ -1,0 +1,19 @@
+{{- if .Values.runtime.create -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azurefile
+  labels:
+    {{- include "gordo.labels"  (dict "context" . "component" .Values.runtime.name) | nindent 4 }}
+  {{- with .Values.runtime.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.runtime.pvc.size }}
+  storageClassName: {{ .Values.runtime.pvc.storageClassName }}
+{{- end }}

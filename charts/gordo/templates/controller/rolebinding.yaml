@@ -1,0 +1,20 @@
+{{- if .Values.controller.rbac.create -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ template "gordo.controller.fullname" . }}
+  labels:
+    {{- include "gordo.labels" (dict "context" . "component" .Values.controller.name) | nindent 4 }}
+  {{- with .Values.controller.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "gordo.controller.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "gordo.controller.serviceAccountName" . }}
+    namespace: {{ default "default" .Release.Namespace }}
+{{- end }}
