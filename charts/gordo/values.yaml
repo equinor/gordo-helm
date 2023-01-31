@@ -138,13 +138,19 @@ runtime:
   create: true
 
   modelBuilderConfig:
+    create: true
+
     data: {}
 
   serverPriority:
+    create: true
+
     value: 100
     globalDefault: false
 
   pvc:
+    create: true
+
     size: "200Gi"
     storageClassName: "standard"
 
