@@ -64,9 +64,7 @@ controller:
 
   istio:
     hosts: []
-    gateways:
-      # TODO make this field adjustable through gordo environment variable.
-      - istio-system/istio-gateway
+    gateways: []
 
   resources: {}
     # limits:
@@ -140,13 +138,19 @@ runtime:
   create: true
 
   modelBuilderConfig:
+    create: true
+
     data: {}
 
   serverPriority:
+    create: true
+
     value: 100
     globalDefault: false
 
   pvc:
+    create: true
+
     size: "200Gi"
     storageClassName: "standard"
 
@@ -162,3 +166,6 @@ argoRunner:
     create: true
     name: ""
     annotations: {}
+
+argo-workflows:
+  enabled: false

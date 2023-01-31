@@ -1,6 +1,7 @@
 remote: origin
-chart-dirs:
-  - charts
+target-branch: main
+chart-repos:
+  - argoproj=https://argoproj.github.io/argo-helm/
 helm-extra-args: "--timeout 600s"
 validate-chart-schema: false
 validate-maintainers: true

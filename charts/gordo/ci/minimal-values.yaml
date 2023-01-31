@@ -1,0 +1,8 @@
+runtime:
+  pvc:
+    create: false
+
+    size: "1M"
+
+argo-workflows:
+  enabled: true

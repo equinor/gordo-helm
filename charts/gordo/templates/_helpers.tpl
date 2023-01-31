@@ -141,3 +141,34 @@ Istio Gateway selector.
 istio: ingressgateway
 {{- end -}}
 {{- end -}}
+
+{{/*
+VirtualService hosts.
+
+TODO make this function more general
+*/}}
+{{- define "gordo.controller.virtualServiceHosts" -}}
+{{- if .Values.controller.istio.hosts -}}
+{{- toYaml .Values.controller.istio.hosts }}
+{{- else -}}
+- "*"
+{{- end -}}
+{{- end -}}
+
+{{/*
+VirtualService gateways.
+
+TODO make this function more general
+*/}}
+{{- define "gordo.controller.virtualServiceGateways" -}}
+{{- if .Values.controller.istio.gateways -}}
+{{- toYaml .Values.controller.istio.gateways }}
+{{- else -}}
+{{- if .Values.istio.gateway.create -}}
+- {{ include "gordo.controller.fullname" . }}
+{{- else -}}
+{{- /* TODO make this field adjustable through gordo environment variable. */ -}}
+- istio-system/istio-gateway
+{{- end -}}
+{{- end -}}
+{{- end -}}

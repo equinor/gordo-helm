@@ -1,4 +1,4 @@
-{{- if .Values.controller.istio.enabled -}}
+{{- if .Values.istio.enabled -}}
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -12,10 +12,8 @@ metadata:
 spec:
   hosts:
   {{- include "gordo.controller.virtualServiceHosts" . | nindent 2 }}
-  {{- with .Values.controller.istio.vs.gateways }}
   gateways:
-  {{ toYaml . | nindent 2 }}
-  {{- end }}
+  {{- include "gordo.controller.virtualServiceGateways" . | nindent 2 }}
   http:
   - match:
     - uri:

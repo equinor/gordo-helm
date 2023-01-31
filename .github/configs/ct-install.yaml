@@ -1,7 +1,6 @@
 remote: origin
-chart-dirs:
-  - charts
-helm-extra-args: "--timeout 600s"
+target-branch: main
+helm-extra-args: "--timeout 120s"
 validate-chart-schema: false
 validate-maintainers: true
 validate-yaml: true

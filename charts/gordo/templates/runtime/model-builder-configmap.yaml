@@ -1,4 +1,4 @@
-{{- if .Values.runtime.create -}}
+{{- if and .Values.runtime.create .Values.runtime.modelBuilderConfig.create -}}
 kind: ConfigMap
 apiVersion: v1
 metadata:
