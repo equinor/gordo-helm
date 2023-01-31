@@ -24,6 +24,10 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3
 
+      - name: Add dependency chart repos
+        run: |
+          helm repo add argoproj https://argoproj.github.io/argo-helm/
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
         env:
