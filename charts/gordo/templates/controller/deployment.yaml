@@ -19,7 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "gordo.selectorLabels" (dict "context" . "component" .Values.controller.name) | nindent 8 }}
+        {{- include "gordo.labels" (dict "context" . "component" .Values.controller.name) | nindent 8 }}
     spec:
       {{- with .Values.images.pullSecrets }}
       imagePullSecrets:
