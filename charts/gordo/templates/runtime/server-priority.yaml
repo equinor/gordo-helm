@@ -1,4 +1,4 @@
-{{- if .Values.runtime.create -}}
+{{- if and .Values.runtime.create .Values.runtime.serverPriority.create -}}
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
