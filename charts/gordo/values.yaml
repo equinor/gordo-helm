@@ -160,3 +160,6 @@ argoRunner:
     create: true
     name: ""
     annotations: {}
+
+argo-workflows:
+  enabled: false
