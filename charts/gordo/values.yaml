@@ -64,9 +64,7 @@ controller:
 
   istio:
     hosts: []
-    gateways:
-      # TODO make this field adjustable through gordo environment variable.
-      - istio-system/istio-gateway
+    gateways: []
 
   resources: {}
     # limits:
