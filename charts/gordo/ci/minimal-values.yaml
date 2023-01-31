@@ -1,2 +1,5 @@
+pvc:
+  size: "1M"
+
 argo-workflows:
   enabled: true
