@@ -1,0 +1,13 @@
+runtime:
+  pvc:
+    create: false
+    storageClassName: "-"
+    size: "1M"
+
+argo-workflows:
+  enabled: true
+
+controller:
+
+  ingress:
+    enabled: true

@@ -57,7 +57,7 @@ controller:
     className: ""
     annotations: {}
     hosts:
-      - minikube.local
+      - gordo.local
     tls:
       enabled: false
       secretName: ""
