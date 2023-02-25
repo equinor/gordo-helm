@@ -151,8 +151,8 @@ runtime:
   pvc:
     create: true
 
-    size: "200Gi"
-    storageClassName: "standard"
+    size: "200Mi"
+    storageClassName: ""
 
 argoRunner:
   name: "argo-runner"
