@@ -54,10 +54,9 @@ controller:
 
   ingress:
     enabled: false
-    className: ""
+    className: "nginx"
     annotations: {}
-    hosts:
-      - gordo.local
+    hosts: []
     tls:
       enabled: false
       secretName: ""

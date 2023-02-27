@@ -172,3 +172,10 @@ TODO make this function more general
 {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Default Ingress local host.
+*/}}
+{{- define "gordo.ingress.defaultHost" -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" }}.local
+{{- end -}}

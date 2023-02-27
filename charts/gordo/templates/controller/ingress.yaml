@@ -1,6 +1,11 @@
 {{- if .Values.controller.ingress.enabled -}}
 {{- $fullName := include "gordo.controller.fullname" . -}}
-{{- $hosts := .Values.controller.ingress.hosts -}}
+{{- $hosts := list -}}
+{{- if empty .Values.controller.ingress.hosts -}}
+{{- $hosts = append $hosts (include "gordo.ingress.defaultHost" .) -}}
+{{- else -}}
+{{- $hosts = concat $hosts .Values.controller.ingress.hosts -}}
+{{- end -}}
 {{- $port := .Values.controller.service.port -}}
 {{- $_ := set .Values.controller.ingress.annotations "ingress.kubernetes.io/rewrite-target" "/" }}
 {{- $_ := set .Values.controller.ingress.annotations "nginx.ingress.kubernetes.io/rewrite-target" "/" }}
