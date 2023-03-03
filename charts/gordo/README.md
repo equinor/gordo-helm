@@ -3,7 +3,7 @@
 ### Install in minikube
 
 1. Install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [helm](https://helm.sh/docs/intro/install/).
-2. Install [minikube](https://minikube.sigs.k8s.io/docs/start/).
+2. Start [minikube](https://minikube.sigs.k8s.io/docs/start/).
 
 3. Add ingress addon to minikube:
 ```
