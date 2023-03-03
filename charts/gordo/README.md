@@ -9,7 +9,7 @@
 ```
 minikube addons enable ingress
 ```
-4. Install helm:
+4. Install helm chart:
 ```
 helm install gordo . -f dev/minikube-values.yaml
 ```
