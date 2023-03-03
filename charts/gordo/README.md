@@ -1,6 +1,6 @@
 ## Development manual
 
-### Install inikube
+### Install in minikube
 
 1. Install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [helm](https://helm.sh/docs/intro/install/).
 2. Install [minikube](https://minikube.sigs.k8s.io/docs/start/).
