@@ -61,6 +61,8 @@ controller:
       enabled: false
       secretName: ""
 
+  pathPrefox: ""
+
   istio:
     hosts: []
     gateways: []

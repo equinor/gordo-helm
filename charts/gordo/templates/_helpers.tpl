@@ -179,3 +179,18 @@ Default Ingress local host.
 {{- define "gordo.ingress.defaultHost" -}}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}.local
 {{- end -}}
+
+{{/*
+pathPerfix for controller ingress.
+*/}}
+{{- define "gordo.ingress.pathPrefix" -}}
+{{- if empty .Values.controller.pathPrefox -}}
+{{ .Values.controller.pathPrefox }}
+{{- else -}}
+{{- if eq .Values.controller.ingress.className "nginx" -}}
+{{ "/" }}{{- include "gordo.fullname" . -}}/(.*)
+{{- else -}}
+{{ "/" }}{{- include "gordo.fullname" . -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}

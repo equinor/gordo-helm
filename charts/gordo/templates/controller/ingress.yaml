@@ -7,12 +7,13 @@
 {{- $hosts = concat $hosts .Values.controller.ingress.hosts -}}
 {{- end -}}
 {{- $port := .Values.controller.service.port -}}
-{{- $_ := set .Values.controller.ingress.annotations "ingress.kubernetes.io/rewrite-target" "/" }}
-{{- $_ := set .Values.controller.ingress.annotations "nginx.ingress.kubernetes.io/rewrite-target" "/" }}
 {{- if and .Values.controller.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.controller.ingress.annotations "kubernetes.io/ingress.class") }}
     {{- $_ := set .Values.controller.ingress.annotations "kubernetes.io/ingress.class" .Values.controller.ingress.className}}
   {{- end }}
+{{- end }}
+{{- if eq .Values.controller.ingress.className "nginx" }}
+  {{- $_ := set .Values.controller.ingress.annotations "nginx.ingress.kubernetes.io/rewrite-target" "/$1" }}
 {{- end }}
 {{ include "gordo.ingress.apiVersion" . }}
 kind: Ingress
@@ -20,8 +21,8 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "gordo.labels"  (dict "context" . "component" .Values.controller.name) | nindent 4 }}
-  annotations:
   {{- with .Values.controller.ingress.annotations }}
+  annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
@@ -41,7 +42,7 @@ spec:
     - host: {{ $host | quote }}
       http:
         paths:
-          - path: /gordo-controller
+          - path: {{- include "gordo.ingress.pathPrefix" . -}}
             {{- if (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
             pathType: Prefix
             {{- end }}
