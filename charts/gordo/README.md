@@ -13,13 +13,26 @@ minikube addons enable ingress
 ```
 helm install gordo . -f dev/minikube-values.yaml
 ```
-5. Checkout an IP address for gordo-controller:
+5. Checkout an IP address for controller:
 ```
 > kubectl get ingress
 NAME               CLASS   HOSTS         ADDRESS          PORTS   AGE
 gordo-controller   nginx   gordo.local   <IP address>     80      4m
 ```
-6. Add this IP address to [the hosts file](https://en.wikipedia.org/wiki/Hosts_(file)).
+Add this IP address to [the hosts file](https://en.wikipedia.org/wiki/Hosts_(file)).
 ```
 gordo.local <IP address>
 ```
+Check connection:
+```
+curl gordo.local/gordo-controller/models
+```
+6. As an alternative port-forward controller's port
+```
+kubectl port-forward service/gordo-controller 8080:80
+```
+and:
+```
+curl gordo.local:8080/models
+```
+
