@@ -1,5 +1,3 @@
-# gordo
-
 ## Development manual
 
 ### Minikube
