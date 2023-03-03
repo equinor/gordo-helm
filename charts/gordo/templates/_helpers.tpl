@@ -172,3 +172,25 @@ TODO make this function more general
 {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Default Ingress local host.
+*/}}
+{{- define "gordo.ingress.defaultHost" -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" }}.local
+{{- end -}}
+
+{{/*
+pathPerfix for controller ingress.
+*/}}
+{{- define "gordo.controller.pathPrefix" -}}
+{{- if not (empty .Values.controller.pathPrefix) -}}
+{{ .Values.controller.pathPrefix }}
+{{- else -}}
+{{- if eq .Values.controller.ingress.className "nginx" -}}
+{{ "/" }}{{- include "gordo.controller.fullname" . -}}/(.*)
+{{- else -}}
+{{ "/" }}{{- include "gordo.controller.fullname" . -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}

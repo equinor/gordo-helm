@@ -54,13 +54,14 @@ controller:
 
   ingress:
     enabled: false
-    className: ""
+    className: "nginx"
     annotations: {}
-    hosts:
-      - minikube.local
+    hosts: []
     tls:
       enabled: false
       secretName: ""
+
+  pathPrefix: ""
 
   istio:
     hosts: []
@@ -151,8 +152,8 @@ runtime:
   pvc:
     create: true
 
-    size: "200Gi"
-    storageClassName: "standard"
+    size: "200Mi"
+    storageClassName: ""
 
 argoRunner:
   name: "argo-runner"

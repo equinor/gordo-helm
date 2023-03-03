@@ -6,3 +6,8 @@ runtime:
 
 argo-workflows:
   enabled: true
+
+controller:
+
+  ingress:
+    enabled: true

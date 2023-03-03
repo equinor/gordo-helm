@@ -15,5 +15,11 @@ spec:
   resources:
     requests:
       storage: {{ .Values.runtime.pvc.size }}
-  storageClassName: {{ .Values.runtime.pvc.storageClassName }}
+{{- if .Values.runtime.pvc.storageClassName }}
+{{- if (eq "-" .Values.runtime.pvc.storageClassName) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.runtime.pvc.storageClassName }}"
+{{- end }}
+{{- end }}
 {{- end }}
