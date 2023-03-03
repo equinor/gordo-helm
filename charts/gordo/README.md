@@ -30,7 +30,7 @@ gordo.local <IP address>
 curl gordo.local/gordo-controller/models
 ```
 ### Port-forward
-Could be an alternative for [Ingress connection](#ingress-connection)
+Could be an alternative for [Ingress connection](#ingress-connection).
 
 1. Port-forward controller's service:
 ```
