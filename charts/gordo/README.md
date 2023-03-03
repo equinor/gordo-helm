@@ -15,7 +15,7 @@ helm install gordo . -f dev/minikube-values.yaml
 ```
 ### Ingress connection
 
-1. Checkout an IP address for controller:
+1. Checkout controller IP address:
 ```
 > kubectl get ingress
 NAME               CLASS   HOSTS         ADDRESS          PORTS   AGE
