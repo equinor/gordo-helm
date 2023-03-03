@@ -183,14 +183,14 @@ Default Ingress local host.
 {{/*
 pathPerfix for controller ingress.
 */}}
-{{- define "gordo.ingress.pathPrefix" -}}
-{{- if empty .Values.controller.pathPrefox -}}
-{{ .Values.controller.pathPrefox }}
+{{- define "gordo.controller.pathPrefix" -}}
+{{- if not (empty .Values.controller.pathPrefix) -}}
+{{ .Values.controller.pathPrefix }}
 {{- else -}}
 {{- if eq .Values.controller.ingress.className "nginx" -}}
-{{ "/" }}{{- include "gordo.fullname" . -}}/(.*)
+{{ "/" }}{{- include "gordo.controller.fullname" . -}}/(.*)
 {{- else -}}
-{{ "/" }}{{- include "gordo.fullname" . -}}
+{{ "/" }}{{- include "gordo.controller.fullname" . -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
