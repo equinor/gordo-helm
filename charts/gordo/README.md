@@ -1,6 +1,6 @@
 ## Development manual
 
-### Minikube
+### Install inikube
 
 1. Install [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [helm](https://helm.sh/docs/intro/install/).
 2. Install [minikube](https://minikube.sigs.k8s.io/docs/start/).
@@ -13,25 +13,28 @@ minikube addons enable ingress
 ```
 helm install gordo . -f dev/minikube-values.yaml
 ```
-5. Checkout an IP address for controller:
+### Ingress connection
+
+1. Checkout an IP address for controller:
 ```
 > kubectl get ingress
 NAME               CLASS   HOSTS         ADDRESS          PORTS   AGE
 gordo-controller   nginx   gordo.local   <IP address>     80      4m
 ```
-Add this IP address to [the hosts file](https://en.wikipedia.org/wiki/Hosts_(file)).
+2. Add this IP address to [the hosts file](https://en.wikipedia.org/wiki/Hosts_(file)).
 ```
 gordo.local <IP address>
 ```
-Check connection:
+3. Check connection:
 ```
 curl gordo.local/gordo-controller/models
 ```
-6. As an alternative port-forward controller's port
+### Port-forward
+1. As an alternative port-forward controller's port
 ```
 kubectl port-forward service/gordo-controller 8080:80
 ```
-and:
+2. Check connection:
 ```
 curl gordo.local:8080/models
 ```
