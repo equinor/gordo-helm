@@ -75,7 +75,7 @@ controller:
     #   cpu: 10m
     #   memory: 250Mi
 
-  volumes: []
+  volumes: ""
 
   nodeSelector: {}
 
