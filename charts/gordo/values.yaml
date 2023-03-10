@@ -52,6 +52,15 @@ controller:
 
   portName: "http-api"
 
+  autoscaling:
+    enabled: false
+    create: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+
   ingress:
     enabled: false
     className: "nginx"

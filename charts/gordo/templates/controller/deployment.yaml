@@ -9,6 +9,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- if not .Values.controller.autoscaling.enabled }}
+  replicas: {{ .Values.controller.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "gordo.selectorLabels" (dict "context" . "component" .Values.controller.name) | nindent 6 }}
