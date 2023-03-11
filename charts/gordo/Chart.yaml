@@ -1,7 +1,7 @@
 apiVersion: v2
 name: gordo
 appVersion: "2.0.0"
-version: 0.1.2
+version: 0.2.0
 description: A Helm chart for Gordo
 type: application
 home: https://github.com/equinor/gordo-helm
@@ -9,7 +9,7 @@ sources:
   - https://github.com/equinor/gordo
 dependencies:
   - name: argo-workflows
-    version: 0.22.9
+    version: 0.22.13
     repository: https://argoproj.github.io/argo-helm
     condition: argo-workflows.enabled
 maintainers:
