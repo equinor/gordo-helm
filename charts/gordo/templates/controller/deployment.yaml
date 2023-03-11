@@ -9,6 +9,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- if not .Values.controller.autoscaling.enabled }}
+  replicas: {{ .Values.controller.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "gordo.selectorLabels" (dict "context" . "component" .Values.controller.name) | nindent 6 }}
@@ -49,13 +52,26 @@ spec:
             - name: {{ $name | quote }}
               value: {{ get $env $name | quote }}
           {{- end }}
+          {{- if .Values.controller.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
               path: /health
-              port: "{{ .Values.controller.portName }}"
-            {{- with .Values.controller.probe }}
+              port: {{ .Values.controller.portName }}
+            {{- $probe := .Values.controller.readinessProbe | deepCopy }}
+            {{- with omit $probe "enabled" }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{- end }}
+          {{- if .Values.controller.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.controller.portName }}
+            {{- $probe := .Values.controller.livenessProbe | deepCopy }}
+            {{- with omit $probe "enabled" }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- end }}
           {{- with .Values.controller.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
@@ -66,7 +82,7 @@ spec:
           {{- end }}
       {{- with .Values.controller.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
+        {{- tpl . $ | nindent 8 }}
       {{- end }}
       {{- with .Values.controller.nodeSelector }}
       nodeSelector:

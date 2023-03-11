@@ -43,7 +43,11 @@ controller:
 
   podAnnotations: {}
 
-  probe: {}
+  readinessProbe:
+    enabled: true
+
+  livenessProbe:
+    enabled: false
 
   service:
     type: ClusterIP
@@ -51,6 +55,15 @@ controller:
     port: 80
 
   portName: "http-api"
+
+  autoscaling:
+    enabled: false
+    create: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
 
   ingress:
     enabled: false
@@ -75,7 +88,7 @@ controller:
     #   cpu: 10m
     #   memory: 250Mi
 
-  volumes: []
+  volumes: ""
 
   nodeSelector: {}
 
