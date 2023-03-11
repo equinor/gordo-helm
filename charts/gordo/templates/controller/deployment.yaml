@@ -52,13 +52,26 @@ spec:
             - name: {{ $name | quote }}
               value: {{ get $env $name | quote }}
           {{- end }}
+          {{- if .Values.controller.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
               path: /health
-              port: "{{ .Values.controller.portName }}"
-            {{- with .Values.controller.probe }}
+              port: {{ .Values.controller.portName }}
+            {{- $probe := .Values.controller.readinessProbe | deepCopy }}
+            {{- with omit $probe "enabled" }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{- end }}
+          {{- if .Values.controller.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.controller.portName }}
+            {{- $probe := .Values.controller.livenessProbe | deepCopy }}
+            {{- with omit $probe "enabled" }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- end }}
           {{- with .Values.controller.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

@@ -43,7 +43,11 @@ controller:
 
   podAnnotations: {}
 
-  probe: {}
+  readinessProbe:
+    enabled: true
+
+  livenessProbe:
+    enabled: false
 
   service:
     type: ClusterIP
