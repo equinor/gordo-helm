@@ -51,7 +51,10 @@ app.kubernetes.io/version: {{ .context.Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .context.Release.Service }}
 {{- with .context.Values.extraLabels }}
-{{ toYaml . }}
+{{- range $name, $label := . }}
+{{- $v := tpl $label $.context }}
+{{ $name }}: {{ $v | quote }}
+{{- end }}
 {{- end }}
 {{- end }}
 
