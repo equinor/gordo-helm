@@ -1,6 +1,6 @@
 runtime:
   pvc:
-    create: false
+    create: true
     storageClassName: "-"
     size: "100M"
 
