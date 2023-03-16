@@ -59,6 +59,19 @@ app.kubernetes.io/managed-by: {{ .context.Release.Service }}
 {{- end }}
 
 {{/*
+spec.template.metadata labels.
+*/}}
+{{- define "gordo.podTemplate.labels" -}}
+{{ include "gordo.selectorLabels" (dict "context" .context "component" .component) }}
+{{- with .context.Values.podLabels }}
+{{- range $name, $label := . }}
+{{- $v := tpl $label $.context }}
+{{ $name }}: {{ $v | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
 Selector labels.
 */}}
 {{- define "gordo.selectorLabels" -}}

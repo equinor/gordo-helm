@@ -22,10 +22,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "gordo.selectorLabels" (dict "context" . "component" .Values.controller.name) | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- include "gordo.podTemplate.labels" (dict "context" . "component" .Values.controller.name) | nindent 8 }}
     spec:
       {{- with .Values.images.pullSecrets }}
       imagePullSecrets:
@@ -84,8 +81,11 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
       {{- with .Values.controller.volumes }}
+      {{- $volumes := tpl . $ }}
+      {{- if trim $volumes }}
       volumes:
-        {{- tpl . $ | nindent 8 }}
+        {{- $volumes | nindent 8 }}
+      {{- end }}
       {{- end }}
       {{- with .Values.controller.nodeSelector }}
       nodeSelector:
