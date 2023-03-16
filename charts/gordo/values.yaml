@@ -40,6 +40,7 @@ controller:
 
   rbac:
     create: true
+    annotations: {}
 
   podAnnotations: {}
 
@@ -79,6 +80,7 @@ controller:
   istio:
     hosts: []
     gateways: []
+    annotations: {}
 
   resources: {}
     # limits:
@@ -142,6 +144,8 @@ securityContext: {}
 
 podSecurityContext: {}
   # fsGroup: 2000
+
+podLabels: {}
 
 # Apply extra labels to common labels.
 extraLabels: {}
