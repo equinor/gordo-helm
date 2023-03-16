@@ -2,7 +2,7 @@ runtime:
   pvc:
     create: false
     storageClassName: "-"
-    size: "1M"
+    size: "100M"
 
 argo-workflows:
   enabled: true
