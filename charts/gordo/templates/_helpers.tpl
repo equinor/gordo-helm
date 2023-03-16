@@ -91,14 +91,30 @@ Create the name of the gordo-controller service account to use.
 {{- end }}
 
 {{/*
+controller RESOURCES_LABELS.
+*/}}
+{{- define "gordo.controller.resourcesLabels" -}}
+{{- $labels := dict }}
+{{- range $name, $label := .Values.extraLabels }}
+{{- $v := tpl $label $ }}
+{{- $labels := set $labels $name $v}}
+{{- end }}
+{{- range $name, $label := .Values.podLabels }}
+{{- $v := tpl $label $ }}
+{{- $labels := set $labels $name $v}}
+{{- end }}
+{{- toJson $labels }}
+{{- end -}}
+
+{{/*
 gordo-controller default env.
 */}}
 {{- define "gordo.controller.defaultEnvs" -}}
 {{ $env := dict }}
 {{ $env := set $env "RUST_LOG" .Values.controller.rustLog }}
 {{ $env := set $env "DEFAULT_DEPLOY_ENVIRONMENT" (toJson .Values.controller.defaultDeployEnvironment) }}
-{{ $env := set $env "RESOURCES_LABELS" (toJson .Values.extraLabels) }}
-{{ $env := set $env "ARGO_SERVICE_ACCOUNT" (include "gordo.argoRunner.serviceAccountName" .) }}
+{{ $env := set $env "RESOURCES_LABELS" (include "gordo.controller.resourcesLabels" . ) }}
+{{ $env := set $env "ARGO_SERVICE_ACCOUNT" (include "gordo.argoRunner.serviceAccountName" . ) }}
 {{ $env := set $env "DEPLOY_IMAGE" (include "gordo.image" (dict "context" . "image" .Values.controller.deployImage)) }}
 {{ $env := set $env "DOCKER_REGISTRY" .Values.controller.deployImage.registry }}
 {{ $env := set $env "SERVER_PORT" .Values.controller.containerPort }}
