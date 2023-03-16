@@ -12,15 +12,15 @@ spec:
             type: RandomDataProvider
           tags: #list of tags
             - TAG 1
-            - GRA-TAG 2
-            - GRA-TAG 3
+            - TAG 2
+            - TAG 3
           train_start_date: 2023-06-07T09:11:30+01:00
           train_end_date: 2023-09-15T03:01:00+01:00
-    model: |
-        gordo.machine.model.anomaly.diff.DiffBasedAnomalyDetector:
-          base_estimator:
-            sklearn.pipeline.Pipeline:
-              steps:
-                - sklearn.preprocessing.MinMaxScaler
-                - gordo.machine.model.models.KerasAutoEncoder:
-                    kind: feedforward_hourglass
+        model: |
+          gordo.machine.model.anomaly.diff.DiffBasedAnomalyDetector:
+            base_estimator:
+              sklearn.pipeline.Pipeline:
+                steps:
+                  - sklearn.preprocessing.MinMaxScaler
+                  - gordo.machine.model.models.KerasAutoEncoder:
+                      kind: feedforward_hourglass

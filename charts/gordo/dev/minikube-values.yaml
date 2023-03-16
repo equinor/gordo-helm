@@ -4,6 +4,11 @@ runtime:
     storageClassName: "-"
     size: "100M"
 
+  modelBuilderConfig:
+    create: true
+    data:
+      azureml_workspace_str: "<placeholder>"
+
 argo-workflows:
   enabled: true
 
