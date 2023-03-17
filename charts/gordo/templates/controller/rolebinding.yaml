@@ -5,7 +5,7 @@ metadata:
   name: {{ template "gordo.controller.fullname" . }}
   labels:
     {{- include "gordo.labels" (dict "context" . "component" .Values.controller.name) | nindent 4 }}
-  {{- with .Values.controller.annotations }}
+  {{- with .Values.controller.rbac.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
