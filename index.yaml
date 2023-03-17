@@ -3,6 +3,27 @@ entries:
   gordo:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2023-03-17T14:53:30.268804928Z"
+    dependencies:
+    - condition: argo-workflows.enabled
+      name: argo-workflows
+      repository: https://argoproj.github.io/argo-helm
+      version: 0.22.13
+    description: A Helm chart for Gordo
+    digest: 9d3391022e1f2e286db9b8e0213ee3ceb24bdf24fa86ab131f7fab1a22de469d
+    home: https://github.com/equinor/gordo-helm
+    maintainers:
+    - email: skoropets@gmail.com
+      name: koropets
+    name: gordo
+    sources:
+    - https://github.com/equinor/gordo
+    type: application
+    urls:
+    - https://github.com/equinor/gordo-helm/releases/download/gordo-0.3.0/gordo-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2023-03-13T14:51:20.456394572Z"
     dependencies:
     - condition: argo-workflows.enabled
@@ -85,4 +106,4 @@ entries:
     urls:
     - https://github.com/equinor/gordo-helm/releases/download/gordo-0.1.1/gordo-0.1.1.tgz
     version: 0.1.1
-generated: "2023-03-13T14:51:20.456411172Z"
+generated: "2023-03-17T14:53:30.268822328Z"
