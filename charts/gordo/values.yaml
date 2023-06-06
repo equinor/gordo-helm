@@ -24,7 +24,7 @@ controller:
 
   containerPort: 8888
 
-  rustLog: "debug,kube=debug"
+  rustLog: "info,kube=info"
   defaultDeployEnvironment: {}
 
   deployImage:
