@@ -47,10 +47,13 @@ spec:
               protocol: TCP
           env:
           {{- $defaultEnvs := fromJson (include "gordo.controller.defaultEnvs" .) -}}
+          {{- $context := . }}
           {{- $env := mustMerge $defaultEnvs .Values.controller.env -}}
-          {{- range $name := keys $env | uniq | sortAlpha }}
-            - name: {{ $name | quote }}
-              value: {{ get $env $name | quote }}
+          {{- range (keys $env | uniq | sortAlpha) }}
+            {{- /* Added toString due to - wrong type for value; expected string; got float64 0_o */}}
+            {{- $value := get $env . | toString }}
+            - name: {{ . | quote }}
+              value: {{ tpl $value $context | quote }}
           {{- end }}
           {{- if .Values.controller.readinessProbe.enabled }}
           readinessProbe:

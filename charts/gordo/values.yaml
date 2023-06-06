@@ -2,6 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+nameOverride: ""
+fullnameOverride: ""
 
 images:
   pullPolicy: IfNotPresent
@@ -20,12 +22,9 @@ controller:
     pullPolicy: ""
     tag: ""
 
-  nameOverride: ""
-  fullnameOverride: ""
-
   containerPort: 8888
 
-  rustLog: "debug,kube=debug"
+  rustLog: "info,kube=info"
   defaultDeployEnvironment: {}
 
   deployImage:
