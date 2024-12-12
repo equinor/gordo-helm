@@ -1,7 +1,7 @@
 apiVersion: v2
 name: gordo
 appVersion: "2.1.4"
-version: 0.5.0
+version: 0.5.1
 description: A Helm chart for Gordo
 type: application
 home: https://github.com/equinor/gordo-helm
